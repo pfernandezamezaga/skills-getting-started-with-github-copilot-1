@@ -15,16 +15,21 @@ document.addEventListener("DOMContentLoaded", () => {
 
       // Populate activities list
       Object.entries(activities).forEach(([name, details]) => {
+
         const activityCard = document.createElement("div");
         activityCard.className = "activity-card";
 
         const spotsLeft = details.max_participants - details.participants.length;
 
-        const participantsHTML = details.participants.length > 0
-          ? `<ul class="participants-list">${details.participants.map(p =>
-              `<li><span class="participant-email">${p}</span><button class="delete-btn" data-activity="${name}" data-email="${p}" title="Unregister">&#x1F5D1;</button></li>`
-            ).join("")}</ul>`
-          : `<p class="no-participants">No participants yet. Be the first!</p>`;
+        // Crear la sección de participantes como lista con estilo
+        let participantsHTML = "";
+        if (details.participants.length > 0) {
+          participantsHTML = `<ul class="participants-list">${details.participants.map(p =>
+            `<li><span class="participant-email">${p}</span><button class="delete-btn" data-activity="${name}" data-email="${p}" title="Unregister">&#x1F5D1;</button></li>`
+          ).join("")}</ul>`;
+        } else {
+          participantsHTML = `<p class="no-participants">No participants yet. Be the first!</p>`;
+        }
 
         activityCard.innerHTML = `
           <h4>${name}</h4>
